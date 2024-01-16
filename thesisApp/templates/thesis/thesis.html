@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-3">
+        <h2 class="mb-4 d-flex justify-content-center">Thesis</h2>
+        <!-- Thesis table -->
+        {% include 'partials/_thesis_table.html' %}
+
+        <!-- Pageable footer -->
+        {% if thesis_list.has_other_pages %}
+            {% include 'partials/_paginator.html' %}
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Thesis-App{% endblock %}
+
+{% block content %}
+    <!-- Welcome section -->
+    <section class="hero text-light text-center py-5" style="background-color: #38598b;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h1 class="display-4">Welcome!</h1>
+                    <p class="lead">Welcome to Thesis-App. Discover new theses and share your own on this platform.</p>
+                    <a class="btn btn-light btn-lg" href="{% url 'thesis' %}" role="button">View Thesis</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About section -->
+    <section class="features text-center my-5">
+        <div class="container">
+            <div class="row gap-2 justify-content-between">
+                <div class="col-md-4 border rounded shadow card d-flex justify-content-center" style="border-color: #a2a8d3;">
+                    <div class="mb-1 mt-1">
+                        <h3>How to Use</h3>
+                    </div>
+                    <div class="">
+                    <p class="text-muted">1. Explore the available theses on the platform.<br> 2. Contribute by sharing your own thesis.<br> 3. Connect with other researchers and enthusiasts.</p>
+                    </div>
+                </div>
+                <div class="col-md-3 border rounded shadow card d-flex justify-content-center" style="border-color: #a2a8d3;">
+                    <div class="mt-1 mb-1">
+                        <h3>About the Platform</h3>
+                    </div>
+                    <div class="">
+                        <p class="text-muted">Thesis-App is a platform for researchers and students to explore, share, and discuss various theses. It provides a collaborative space for the academic community.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 border rounded shadow card d-flex justify-content-center" style="border-color: #a2a8d3;">
+                    <div class="mt-1 mb-1">
+                        <h3>Featured Theses</h3>
+                    </div>
+                    <!-- Carousel for Featured Theses -->
+                    <div id="featuredThesesCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for thesis in featured_theses %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <a class="text-decoration-none" href="{% url 'thesis_detail' thesis.id %}">
+                                        <div class="carousel-content text-center p-3">
+                                            <h5 class="fw-bold">{{ thesis.title|title }}</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#featuredThesesCarousel" data-bs-slide="prev">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#featuredThesesCarousel" data-bs-slide="next">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

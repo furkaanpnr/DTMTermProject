@@ -1,0 +1,18 @@
+<!-- New Thesis Form -->
+<div class="card shadow p-3 mb-5 bg-body rounded">
+    <div class="card-body">
+        <h2 class="card-title display-6 text-center">New Thesis</h2>
+        <form method="post" action="{% url 'new_thesis_request' %}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="fieldWrapper d-flex flex-column w-100">
+                    {{ field.errors }}
+                    {{ field.label_tag }} {{ field }}
+                </div>
+            {% endfor %}
+            <div class="d-flex justify-content-center mt-1">
+                <button type="submit" class="btn btn-primary mt-2">Save Thesis</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block custom_css %}
+    <style>
+        /* navlink active color */
+        .nav-pills .nav-link.active {
+            background-color: #38598b !important; /* !important ile önceliklendirme yapılıyor */
+        }
+        .nav-pills .nav-link.active:hover {
+            background-color: #38598b !important;
+            color: #4876bd !important;
+        }
+
+        /* navlink color */
+        .nav-pills .nav-link {
+            color: #6d76cc;
+        }
+        /* navlink hover */
+        .nav-pills .nav-link:hover {
+            color: #365e9b;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Navbar -->
+        <div class="col-md-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active " id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</a>
+                <a class="nav-link" id="v-pills-thesis-tab" data-bs-toggle="pill" href="#v-pills-thesis" role="tab" aria-controls="v-pills-thesis" aria-selected="false">My Thesis</a>
+                <a class="nav-link" id="v-pills-new-thesis-tab" data-bs-toggle="pill" href="#v-pills-new-thesis" role="tab" aria-controls="v-pills-new-thesis" aria-selected="false">New Thesis</a>
+            </div>
+        </div>
+        <!-- Profile Card and Thesis Table -->
+        <div class="col-md-9">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div class="card shadow p-3 mb-5 bg-body rounded">
+                        <div class="row">
+                            <!-- Profile Circle -->
+                            <div class="col-12 col-md-3 text-center">
+                                <div class="rounded-circle text-white" style="width: 80px; height: 80px; line-height: 80px; background-color: #113f67;">
+                                    <h5 class="mb-0" style="position: relative; top: 50%; transform: translateY(-50%);">{{ user.username|first|upper }}</h5>
+                                </div>
+                            </div>
+                            <!-- User Info -->
+                            <div class="col-12 col-md-9">
+                                <div class="card-body">
+                                    <h2 class="card-title display-3">{{ user.get_full_name|title }}</h2>
+                                    <form>
+                                        <div class="mb-3">
+                                            <p class="form-control-plaintext h4">Username: {{ user.username }}</p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="form-control-plaintext h4">Email: {{ user.email }}</p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-thesis" role="tabpanel" aria-labelledby="v-pills-thesis-tab">
+                    <!-- User Thesis -->
+                    <div class="card shadow p-3 mb-5 bg-body rounded">
+
+                        {% include 'partials/_thesis_table.html' %}
+
+                        {% if thesis_list.has_other_pages %}
+                            {% include 'partials/_paginator.html' %}
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- New Thesis Tab Content -->
+                <div class="tab-pane fade" id="v-pills-new-thesis" role="tabpanel" aria-labelledby="v-pills-new-thesis-tab">
+                    {% include 'partials/_new_thesis_form.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // if user activated thesis tab, and then if user hits the pageable link, thesis tab will be active
+    var thesisTab = document.getElementById("v-pills-thesis-tab");
+    var profileTab = document.getElementById("v-pills-profile-tab");
+    
+    if (window.location.href.indexOf("page") > -1) {
+        thesisTab.classList.add("active");
+        profileTab.classList.remove("active");
+
+        // show thesis tab content and hide profile tab content
+        var thesisTabContent = document.getElementById("v-pills-thesis")
+        var profileTabContent = document.getElementById("v-pills-profile")
+        if (thesisTabContent) {
+            thesisTabContent.classList.add("show", "active");
+            profileTabContent.classList.remove("show", "active");
+        }
+    }
+    });
+</script>
+{% endblock %}
